@@ -1,0 +1,46 @@
+[gd_scene load_steps=6 format=3 uid="uid://c5cpljuswtorp"]
+
+[ext_resource type="PackedScene" uid="uid://kibmmbeffq3w" path="res://scenes/entities/player/Player.tscn" id="2_laoo8"]
+[ext_resource type="PackedScene" uid="uid://dwxgu5llkx13a" path="res://scenes/environment/chapter_1.tscn" id="2_r3p3p"]
+[ext_resource type="Script" path="res://scenes/environment/Camera2D.gd" id="3_e80cb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w50x1"]
+size = Vector2(654.975, 368)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l8l6o"]
+size = Vector2(655, 368)
+
+[node name="World" type="Node2D"]
+
+[node name="Chapter 1" parent="." instance=ExtResource("2_r3p3p")]
+position = Vector2(23, -46)
+
+[node name="RoomArea1" type="Node2D" parent="Chapter 1"]
+
+[node name="Area2D" type="Area2D" parent="Chapter 1/RoomArea1"]
+collision_layer = 128
+collision_mask = 0
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Chapter 1/RoomArea1/Area2D"]
+position = Vector2(-313, -184)
+shape = SubResource("RectangleShape2D_w50x1")
+
+[node name="CharacterBody2D" parent="Chapter 1" instance=ExtResource("2_laoo8")]
+position = Vector2(-511, -121)
+
+[node name="Camera2D" type="Camera2D" parent="Chapter 1/CharacterBody2D"]
+position = Vector2(0, 2)
+zoom = Vector2(4, 4)
+script = ExtResource("3_e80cb")
+
+[node name="RoomArea2" type="Node2D" parent="Chapter 1"]
+
+[node name="Area2D" type="Area2D" parent="Chapter 1/RoomArea2"]
+collision_layer = 128
+collision_mask = 0
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Chapter 1/RoomArea2/Area2D"]
+position = Vector2(342, -184)
+shape = SubResource("RectangleShape2D_l8l6o")

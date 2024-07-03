@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://6xvclsdwgcap"]
+
+[ext_resource type="Script" path="res://scenes/entities/player/IDLE.gd" id="1_hmven"]
+
+[node name="IDLE" type="Node2D"]
+script = ExtResource("1_hmven")
