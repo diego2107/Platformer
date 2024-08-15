@@ -1,46 +1,65 @@
-[gd_scene load_steps=6 format=3 uid="uid://c5cpljuswtorp"]
+[gd_scene load_steps=8 format=3 uid="uid://c5cpljuswtorp"]
 
+[ext_resource type="Script" path="res://scenes/environment/Camera2D.gd" id="1_431r6"]
 [ext_resource type="PackedScene" uid="uid://kibmmbeffq3w" path="res://scenes/entities/player/Player.tscn" id="2_laoo8"]
 [ext_resource type="PackedScene" uid="uid://dwxgu5llkx13a" path="res://scenes/environment/chapter_1.tscn" id="2_r3p3p"]
-[ext_resource type="Script" path="res://scenes/environment/Camera2D.gd" id="3_e80cb"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_w50x1"]
-size = Vector2(654.975, 368)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q5gmh"]
+size = Vector2(16, 14)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_l8l6o"]
-size = Vector2(655, 368)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_31rdf"]
+size = Vector2(656, 368)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dmch3"]
+size = Vector2(656, 368)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k6fi3"]
+size = Vector2(1312, 368)
 
 [node name="World" type="Node2D"]
+
+[node name="RoomCamera" type="Camera2D" parent="."]
+process_callback = 0
+script = ExtResource("1_431r6")
 
 [node name="Chapter 1" parent="." instance=ExtResource("2_r3p3p")]
 position = Vector2(23, -46)
 
-[node name="RoomArea1" type="Node2D" parent="Chapter 1"]
-
-[node name="Area2D" type="Area2D" parent="Chapter 1/RoomArea1"]
-collision_layer = 128
-collision_mask = 0
-monitoring = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Chapter 1/RoomArea1/Area2D"]
-position = Vector2(-313, -184)
-shape = SubResource("RectangleShape2D_w50x1")
-
-[node name="CharacterBody2D" parent="Chapter 1" instance=ExtResource("2_laoo8")]
+[node name="PlatformingPlayer" parent="Chapter 1" instance=ExtResource("2_laoo8")]
 position = Vector2(-511, -121)
 
-[node name="Camera2D" type="Camera2D" parent="Chapter 1/CharacterBody2D"]
-position = Vector2(0, 2)
-zoom = Vector2(4, 4)
-script = ExtResource("3_e80cb")
+[node name="RoomDetector" type="Area2D" parent="Chapter 1/PlatformingPlayer"]
+collision_layer = 0
+collision_mask = 128
 
-[node name="RoomArea2" type="Node2D" parent="Chapter 1"]
+[node name="CollisionShape" type="CollisionShape2D" parent="Chapter 1/PlatformingPlayer/RoomDetector"]
+scale = Vector2(1e-05, 1e-05)
+shape = SubResource("RectangleShape2D_q5gmh")
 
-[node name="Area2D" type="Area2D" parent="Chapter 1/RoomArea2"]
+[node name="Room1" type="Area2D" parent="."]
+position = Vector2(21, -46)
 collision_layer = 128
 collision_mask = 0
-monitoring = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Chapter 1/RoomArea2/Area2D"]
-position = Vector2(342, -184)
-shape = SubResource("RectangleShape2D_l8l6o")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Room1"]
+position = Vector2(-311, -184)
+shape = SubResource("RectangleShape2D_31rdf")
+
+[node name="Room2" type="Area2D" parent="."]
+position = Vector2(21, -45)
+collision_layer = 128
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Room2"]
+position = Vector2(345, -185)
+shape = SubResource("RectangleShape2D_dmch3")
+
+[node name="Room3" type="Area2D" parent="."]
+collision_layer = 128
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Room3"]
+position = Vector2(38, 138)
+shape = SubResource("RectangleShape2D_k6fi3")
+
+[connection signal="area_entered" from="Chapter 1/PlatformingPlayer/RoomDetector" to="Chapter 1/PlatformingPlayer" method="_on_RoomDetector_area_entered"]

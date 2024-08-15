@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://daikyk75wvhfw"]
+[gd_scene load_steps=2 format=3 uid="uid://b2wngs37hi2jc"]
 
-[ext_resource type="Script" path="res://scenes/entities/player/Global.gd" id="1_6cknu"]
+[sub_resource type="GDScript" id="GDScript_oy2qc"]
 
 [node name="Global" type="Node"]
-script = ExtResource("1_6cknu")
+script = SubResource("GDScript_oy2qc")

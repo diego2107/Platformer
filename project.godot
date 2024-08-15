@@ -17,12 +17,13 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Global="*res://scenes/entities/player/Global.tscn"
+Global="*res://scenes/entities/player/global.gd"
 
-[display]
+[importer_defaults]
 
-window/size/viewport_width=1920
-window/size/viewport_height=1080
+animation_library={
+"animation/fps": 30.0
+}
 
 [input]
 

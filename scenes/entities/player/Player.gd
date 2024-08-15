@@ -29,6 +29,14 @@ var prev_state = null
 @onready var FloorRaycast = $FloorRaycast
 @onready var sprite = $Sprite2D
 
+enum Touching_Side {
+	BOTH,
+	HORIZONTAL,
+	VERTICAL,
+	NONE
+}
+
+
 func _ready():
 	for state in STATES.get_children():
 		state.STATES = STATES
@@ -38,17 +46,24 @@ func _ready():
 	#print("Initial Player Position: ", global_position) # Debug log
 
 func _physics_process(delta):
+	if !Global.room_pause:
+		move_and_slide()
 	#print("Jumps Left: ", jump_counter)
 	player_input()
 	change_state(current_state.update(delta))
 	$Label.text = str(current_state.get_name())
 	#print("Scale: ", sprite.scale)
-	move_and_slide()
-	# default_move(delta)
+	
 
 func gravity(delta):
 	if not is_on_floor():
 		velocity.y += gravity_value * delta
+	
+	if velocity.y < -1 and Global.room_pause:
+		velocity.y = -300
+	
+	if velocity.y > 0 and Global.room_pause:
+		velocity.y = 0
 
 func change_state(input_state):
 	if input_state != null:
@@ -96,23 +111,59 @@ func player_input():
 		dash_input = true
 	else:
 		dash_input = false
-
+		
 func _on_RoomDetector_area_entered(area: Area2D) -> void:
-	print("AREA ENTERED!")
+	# Gets collision shape and size of room
 	var collision_shape: CollisionShape2D = area.get_node("CollisionShape2D")
 	var size: Vector2 = collision_shape.shape.extents * 2
-
-	var view_size = get_viewport_rect().size
-	if size.y < view_size.y:
-		size.y = view_size.y
-
-	if size.x < view_size.x:
-		size.x = view_size.x
-
-	print("Room size calculated: ", size)
-	var cam = $Camera2D
-	cam.limit_top = collision_shape.global_position.y - size.y / 2
-	cam.limit_left = collision_shape.global_position.x - size.x / 2
-
-	# Changes camera's current room and size. Check camera script for more info
+	
+	# Changes camera's current room and size. check PlayerCamera script for more info
 	Global.change_room(collision_shape.global_position, size)
+	
+# Checks which edge of a touching b. If a and b are overlapping or not touching 
+# the function will push_error(). a is the previous room and b is the room being entered
+func check_room_edge(a_center: Vector2, a_size: Vector2, b_center: Vector2, b_size: Vector2) -> int:
+	
+	var relative_center: Vector2 = a_center - b_center
+	
+	var total_size: Vector2 = a_size + b_size
+	
+	var horizontal_overlap: int = total_size.x / 2 - abs(relative_center.x)
+	var vertical_overlap: int = total_size.y / 2 - abs(relative_center.y)
+	
+	var touching: int
+	
+	if horizontal_overlap > 0 and vertical_overlap > 0:
+		touching = Touching_Side.BOTH
+	elif horizontal_overlap > 0 and vertical_overlap == 0:
+		touching = Touching_Side.VERTICAL
+	elif horizontal_overlap == 0 and vertical_overlap > 0:
+		touching = Touching_Side.HORIZONTAL	
+	elif horizontal_overlap <= 0 and vertical_overlap <= 0:
+		touching = Touching_Side.NONE
+	else:
+		push_error("error calculating room edge")
+		
+	match touching:
+		Touching_Side.BOTH:
+			push_error("rooms overlapping")
+		Touching_Side.NONE:
+			push_error("player crossed two rooms that are not touching")
+		Touching_Side.VERTICAL:
+			if a_center.y < b_center.y: # up is negative y
+				return Global.DOWN
+			elif a_center.y > b_center.y:
+				return Global.UP
+			else:
+				push_error("rooms touching vertically, but at same y coordinate")
+		Touching_Side.HORIZONTAL:
+			if a_center.x < b_center.x:
+				return Global.RIGHT
+			elif a_center.x > b_center.x:
+				return Global.LEFT
+			else:
+				push_error("rooms touching horizontally, but at same x coordinate")
+				
+	# Fail safe
+	return Global.RIGHT
+	
