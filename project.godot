@@ -19,6 +19,10 @@ config/icon="res://icon.svg"
 
 Global="*res://scenes/entities/player/global.gd"
 
+[display]
+
+window/size/mode=3
+
 [importer_defaults]
 
 animation_library={
@@ -67,3 +71,7 @@ MoveDown={
 [layer_names]
 
 2d_physics/layer_8="Room"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0

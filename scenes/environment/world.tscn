@@ -1,8 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://c5cpljuswtorp"]
+[gd_scene load_steps=12 format=3 uid="uid://c5cpljuswtorp"]
 
 [ext_resource type="Script" path="res://scenes/environment/Camera2D.gd" id="1_431r6"]
+[ext_resource type="Texture2D" uid="uid://ci1v4mj8s8bmo" path="res://scenes/environment/stock background 2-export.png" id="1_rl1iv"]
 [ext_resource type="PackedScene" uid="uid://kibmmbeffq3w" path="res://scenes/entities/player/Player.tscn" id="2_laoo8"]
 [ext_resource type="PackedScene" uid="uid://dwxgu5llkx13a" path="res://scenes/environment/chapter_1.tscn" id="2_r3p3p"]
+[ext_resource type="Texture2D" uid="uid://c17ilybuct2ub" path="res://scenes/entities/player/pot-export.png" id="4_ojukp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q5gmh"]
 size = Vector2(16, 14)
@@ -14,11 +16,25 @@ size = Vector2(656, 368)
 size = Vector2(656, 368)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k6fi3"]
-size = Vector2(1312, 368)
+size = Vector2(656, 368)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8lg3y"]
+size = Vector2(656, 368)
+
+[sub_resource type="LabelSettings" id="LabelSettings_mdhr7"]
+font_size = 14
+outline_size = 1
+outline_color = Color(0, 0, 0, 1)
 
 [node name="World" type="Node2D"]
 
+[node name="StockBackground2-export" type="Sprite2D" parent="."]
+position = Vector2(367, -220)
+scale = Vector2(0.971726, 0.963889)
+texture = ExtResource("1_rl1iv")
+
 [node name="RoomCamera" type="Camera2D" parent="."]
+zoom = Vector2(2.93, 2.93)
 process_callback = 0
 script = ExtResource("1_431r6")
 
@@ -41,6 +57,12 @@ position = Vector2(21, -46)
 collision_layer = 128
 collision_mask = 0
 
+[node name="Sprite2D" type="Sprite2D" parent="Room1"]
+texture_filter = 1
+position = Vector2(576, -57)
+texture = ExtResource("4_ojukp")
+offset = Vector2(-1000, 0.875)
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Room1"]
 position = Vector2(-311, -184)
 shape = SubResource("RectangleShape2D_31rdf")
@@ -59,7 +81,27 @@ collision_layer = 128
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Room3"]
-position = Vector2(38, 138)
+position = Vector2(366, 138)
 shape = SubResource("RectangleShape2D_k6fi3")
+
+[node name="Room4" type="Area2D" parent="."]
+collision_layer = 128
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Room4"]
+position = Vector2(-290, 138)
+shape = SubResource("RectangleShape2D_8lg3y")
+
+[node name="Label" type="Label" parent="."]
+texture_filter = 1
+offset_left = -201.0
+offset_top = -154.0
+offset_right = -71.0
+offset_bottom = -88.0
+text = "Arrow Keys = Move
+C / Space = Jump
+Z = Dash"
+label_settings = SubResource("LabelSettings_mdhr7")
+horizontal_alignment = 1
 
 [connection signal="area_entered" from="Chapter 1/PlatformingPlayer/RoomDetector" to="Chapter 1/PlatformingPlayer" method="_on_RoomDetector_area_entered"]

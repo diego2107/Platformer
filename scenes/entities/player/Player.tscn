@@ -157,6 +157,7 @@ script = ExtResource("3_vnydv")
 [node name="SLIDE" parent="STATES" instance=ExtResource("9_12lwl")]
 
 [node name="Label" type="Label" parent="."]
+visible = false
 offset_left = -23.0
 offset_top = -46.0
 offset_right = 24.0
