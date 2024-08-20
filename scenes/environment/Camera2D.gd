@@ -27,13 +27,13 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	# Get view size considering camera zoom
 	zoom_view_size = view_size * zoom
-	print("view size: ", view_size)
-	print("zoom view size: ", zoom_view_size)
-	print("zoom: ", zoom)
+	# print("view size: ", view_size)
+	# print("zoom view size: ", zoom_view_size)
+	# print("zoom: ", zoom)
 	# Get target position
 	var target_position := calculate_target_position(current_room_center, current_room_size)
-	print("position:", position)
-	print("target position:", target_position)
+	# print("position:", position)
+	# print("target position:", target_position)
 	# Interpolate(lerp) camera position to target position by the smoothing
 	position = lerp(position, target_position, smoothing)
 	

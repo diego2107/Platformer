@@ -70,6 +70,7 @@ MoveDown={
 
 [layer_names]
 
+2d_physics/layer_4="CatSpring"
 2d_physics/layer_8="Room"
 
 [rendering]

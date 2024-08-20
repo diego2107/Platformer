@@ -18,6 +18,7 @@ var last_input = Vector2.RIGHT
 var can_dash = true
 var jump_counter = 2
 var slide_friction = 0.75
+var timer = Timer.new()
 
 # States
 var current_state = null
@@ -28,6 +29,7 @@ var prev_state = null
 @onready var WallRaycasts = $WallRaycasts
 @onready var FloorRaycast = $FloorRaycast
 @onready var sprite = $Sprite2D
+@onready var catSpring = $"../../Room4/CatSpring/AnimationPlayer"
 
 enum Touching_Side {
 	BOTH,
@@ -166,4 +168,11 @@ func check_room_edge(a_center: Vector2, a_size: Vector2, b_center: Vector2, b_si
 				
 	# Fail safe
 	return Global.RIGHT
-	
+
+func _on_area_2d_body_entered(body):
+	print("cat entered!")
+	catSpring.play("startled")
+	velocity.y = -500
+	await get_tree().create_timer(0.85).timeout
+	catSpring.play("sleep")
+
