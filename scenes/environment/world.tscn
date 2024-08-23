@@ -107,6 +107,7 @@ collision_layer = 128
 collision_mask = 0
 
 [node name="Sprite2D" type="Sprite2D" parent="Room1"]
+visible = false
 texture_filter = 1
 position = Vector2(576, -57)
 texture = ExtResource("4_ojukp")
