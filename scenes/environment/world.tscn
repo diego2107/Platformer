@@ -76,7 +76,8 @@ outline_color = Color(0, 0, 0, 1)
 [node name="World" type="Node2D"]
 
 [node name="StockBackground2-export" type="Sprite2D" parent="."]
-position = Vector2(367, -220)
+texture_filter = 1
+position = Vector2(-290, -234)
 scale = Vector2(0.971726, 0.963889)
 texture = ExtResource("1_rl1iv")
 
@@ -89,7 +90,7 @@ script = ExtResource("1_431r6")
 position = Vector2(23, -46)
 
 [node name="PlatformingPlayer" parent="Chapter 1" instance=ExtResource("2_laoo8")]
-position = Vector2(-177, 239)
+position = Vector2(-572, -57)
 collision_layer = 9
 
 [node name="RoomDetector" type="Area2D" parent="Chapter 1/PlatformingPlayer"]
@@ -167,6 +168,7 @@ position = Vector2(-241.5, 345.5)
 shape = SubResource("RectangleShape2D_tnppb")
 
 [node name="Label" type="Label" parent="."]
+visible = false
 texture_filter = 1
 offset_left = -201.0
 offset_top = -154.0

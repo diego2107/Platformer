@@ -19,10 +19,6 @@ config/icon="res://icon.svg"
 
 Global="*res://scenes/entities/player/global.gd"
 
-[display]
-
-window/size/mode=3
-
 [importer_defaults]
 
 animation_library={
