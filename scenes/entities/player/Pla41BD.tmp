@@ -122,11 +122,11 @@ _data = {
 }
 
 [node name="Player" type="CharacterBody2D"]
-scale = Vector2(0.75, 0.75)
-collision_mask = 2
+scale = Vector2(0.8, 0.8)
 script = ExtResource("1_tvqml")
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
+scale = Vector2(0.965, 1)
 shape = SubResource("RectangleShape2D_ql0l1")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

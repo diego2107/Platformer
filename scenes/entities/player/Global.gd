@@ -7,6 +7,7 @@ extends Node
 
 @export var room_pause: bool = false
 @export var room_pause_time: float = 0.5
+@export var death_position: Vector2
 
 func change_room(room_position: Vector2, room_size: Vector2) -> void:
 	player_camera.current_room_center = room_position
@@ -15,4 +16,5 @@ func change_room(room_position: Vector2, room_size: Vector2) -> void:
 	room_pause = true
 	await get_tree().create_timer(room_pause_time).timeout
 	room_pause = false
-	
+
+

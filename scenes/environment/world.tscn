@@ -1,88 +1,52 @@
-[gd_scene load_steps=19 format=3 uid="uid://c5cpljuswtorp"]
+[gd_scene load_steps=15 format=3 uid="uid://c5cpljuswtorp"]
 
 [ext_resource type="Script" path="res://scenes/environment/Camera2D.gd" id="1_431r6"]
 [ext_resource type="Texture2D" uid="uid://ci1v4mj8s8bmo" path="res://scenes/environment/stock background 2-export.png" id="1_rl1iv"]
 [ext_resource type="PackedScene" uid="uid://kibmmbeffq3w" path="res://scenes/entities/player/Player.tscn" id="2_laoo8"]
 [ext_resource type="PackedScene" uid="uid://dwxgu5llkx13a" path="res://scenes/environment/chapter_1.tscn" id="2_r3p3p"]
-[ext_resource type="Texture2D" uid="uid://c17ilybuct2ub" path="res://scenes/entities/player/pot-export.png" id="4_ojukp"]
-[ext_resource type="Script" path="res://scenes/environment/Sprite2D.gd" id="7_mbkuk"]
-[ext_resource type="Texture2D" uid="uid://bxo2jwn7u85w7" path="res://scenes/entities/player/cat-Sheet.png" id="7_nwgj5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q5gmh"]
 size = Vector2(0.5, 0.5)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_78aw8"]
+size = Vector2(16, 14)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j3fc8"]
+size = Vector2(16, 14)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_31rdf"]
-size = Vector2(656, 368)
+size = Vector2(320, 188)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2fhb0"]
+size = Vector2(1.25, 49)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dmch3"]
-size = Vector2(656, 368)
+size = Vector2(320, 188)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_k6fi3"]
-size = Vector2(656, 368)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_8lg3y"]
-size = Vector2(656, 368)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ihbnb"]
-size = Vector2(29, 10)
-
-[sub_resource type="Animation" id="Animation_ic1yp"]
-resource_name = "sleep"
-length = 2.0
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [0, 1]
-}
-
-[sub_resource type="Animation" id="Animation_m0vwu"]
-resource_name = "startled"
-length = 0.8
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 1,
-"values": [2, 3, 4, 3, 2]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_onnta"]
-_data = {
-"sleep": SubResource("Animation_ic1yp"),
-"startled": SubResource("Animation_m0vwu")
-}
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_tnppb"]
-size = Vector2(29, 13)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_46mre"]
+size = Vector2(1, 33.0625)
 
 [sub_resource type="LabelSettings" id="LabelSettings_mdhr7"]
 font_size = 14
 outline_size = 1
 outline_color = Color(0, 0, 0, 1)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2fjht"]
+size = Vector2(320, 192)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l3a5y"]
+size = Vector2(2, 57)
+
 [node name="World" type="Node2D"]
 
 [node name="StockBackground2-export" type="Sprite2D" parent="."]
 texture_filter = 1
-position = Vector2(-290, -234)
-scale = Vector2(0.971726, 0.963889)
+position = Vector2(-120.353, -293.875)
+scale = Vector2(0.476762, 0.534028)
 texture = ExtResource("1_rl1iv")
 
 [node name="RoomCamera" type="Camera2D" parent="."]
-zoom = Vector2(2.93, 2.93)
+zoom = Vector2(5.305, 5.305)
 process_callback = 0
 script = ExtResource("1_431r6")
 
@@ -90,7 +54,7 @@ script = ExtResource("1_431r6")
 position = Vector2(23, -46)
 
 [node name="PlatformingPlayer" parent="Chapter 1" instance=ExtResource("2_laoo8")]
-position = Vector2(-572, -57)
+position = Vector2(38, -212)
 collision_layer = 9
 
 [node name="RoomDetector" type="Area2D" parent="Chapter 1/PlatformingPlayer"]
@@ -101,21 +65,36 @@ collision_mask = 128
 scale = Vector2(1e-05, 1e-05)
 shape = SubResource("RectangleShape2D_q5gmh")
 
+[node name="HazardDetector" type="Area2D" parent="Chapter 1/PlatformingPlayer"]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Chapter 1/PlatformingPlayer/HazardDetector"]
+shape = SubResource("RectangleShape2D_78aw8")
+
+[node name="CheckpointDetector" type="Area2D" parent="Chapter 1/PlatformingPlayer"]
+collision_layer = 0
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Chapter 1/PlatformingPlayer/CheckpointDetector"]
+shape = SubResource("RectangleShape2D_j3fc8")
+
 [node name="Room1" type="Area2D" parent="."]
-position = Vector2(21, -46)
+position = Vector2(5, -25)
 collision_layer = 128
 collision_mask = 0
 
-[node name="Sprite2D" type="Sprite2D" parent="Room1"]
-visible = false
-texture_filter = 1
-position = Vector2(576, -57)
-texture = ExtResource("4_ojukp")
-offset = Vector2(-1000, 0.875)
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Room1"]
-position = Vector2(-311, -184)
+position = Vector2(-126, -271)
 shape = SubResource("RectangleShape2D_31rdf")
+
+[node name="Checkpoint" type="Area2D" parent="Room1"]
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Room1/Checkpoint"]
+position = Vector2(-13.625, -214)
+shape = SubResource("RectangleShape2D_2fhb0")
 
 [node name="Room2" type="Area2D" parent="."]
 position = Vector2(21, -45)
@@ -123,50 +102,17 @@ collision_layer = 128
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Room2"]
-position = Vector2(345, -185)
+position = Vector2(178, -251)
 shape = SubResource("RectangleShape2D_dmch3")
 
-[node name="Room3" type="Area2D" parent="."]
-collision_layer = 128
+[node name="Checkpoint" type="Area2D" parent="Room2"]
+position = Vector2(-127, -16)
+collision_layer = 16
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Room3"]
-position = Vector2(366, 138)
-shape = SubResource("RectangleShape2D_k6fi3")
-
-[node name="Room4" type="Area2D" parent="."]
-collision_layer = 128
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Room4"]
-position = Vector2(-290, 138)
-shape = SubResource("RectangleShape2D_8lg3y")
-
-[node name="CatSpring" type="CharacterBody2D" parent="Room4"]
-position = Vector2(23, -46)
-
-[node name="Sprite2D" type="Sprite2D" parent="Room4/CatSpring"]
-position = Vector2(-241, 336)
-texture = ExtResource("7_nwgj5")
-hframes = 5
-script = ExtResource("7_mbkuk")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Room4/CatSpring"]
-position = Vector2(-241.5, 347)
-shape = SubResource("RectangleShape2D_ihbnb")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Room4/CatSpring"]
-libraries = {
-"": SubResource("AnimationLibrary_onnta")
-}
-
-[node name="Area2D" type="Area2D" parent="Room4/CatSpring"]
-collision_layer = 0
-collision_mask = 8
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Room4/CatSpring/Area2D"]
-position = Vector2(-241.5, 345.5)
-shape = SubResource("RectangleShape2D_tnppb")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Room2/Checkpoint"]
+position = Vector2(166.5, -202.469)
+shape = SubResource("RectangleShape2D_46mre")
 
 [node name="Label" type="Label" parent="."]
 visible = false
@@ -181,5 +127,23 @@ Z = Dash"
 label_settings = SubResource("LabelSettings_mdhr7")
 horizontal_alignment = 1
 
+[node name="Room 3" type="Area2D" parent="."]
+collision_layer = 128
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Room 3"]
+position = Vector2(519, -294)
+shape = SubResource("RectangleShape2D_2fjht")
+
+[node name="Checkpoint" type="Area2D" parent="Room 3"]
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Room 3/Checkpoint"]
+position = Vector2(386, -267)
+shape = SubResource("RectangleShape2D_l3a5y")
+
 [connection signal="area_entered" from="Chapter 1/PlatformingPlayer/RoomDetector" to="Chapter 1/PlatformingPlayer" method="_on_RoomDetector_area_entered"]
-[connection signal="body_entered" from="Room4/CatSpring/Area2D" to="Chapter 1/PlatformingPlayer" method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="Chapter 1/PlatformingPlayer/HazardDetector" to="Chapter 1/PlatformingPlayer" method="hazard_entered"]
+[connection signal="body_exited" from="Chapter 1/PlatformingPlayer/HazardDetector" to="Chapter 1/PlatformingPlayer" method="hazard_exited"]
+[connection signal="area_entered" from="Chapter 1/PlatformingPlayer/CheckpointDetector" to="Chapter 1/PlatformingPlayer" method="checkpoint_entered"]

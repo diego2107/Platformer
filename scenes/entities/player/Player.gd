@@ -8,10 +8,11 @@ var move_input = Vector2.ZERO
 var jump_input = false
 var jump_input_actuation
 var dash_input = false
+var danger = false
 
 # Player Movement
-const SPEED = 100.0
-const JUMP_VELOCITY = -400.0
+const SPEED = 80
+const JUMP_VELOCITY = -250
 var last_input = Vector2.RIGHT
 
 # Mechanics
@@ -55,6 +56,9 @@ func _physics_process(delta):
 	change_state(current_state.update(delta))
 	$Label.text = str(current_state.get_name())
 	#print("Scale: ", sprite.scale)
+	
+	if danger == true:
+		die()
 	
 
 func gravity(delta):
@@ -170,9 +174,30 @@ func check_room_edge(a_center: Vector2, a_size: Vector2, b_center: Vector2, b_si
 	return Global.RIGHT
 
 func _on_area_2d_body_entered(body):
-	print("cat entered!")
 	catSpring.play("startled")
 	velocity.y = -500
 	await get_tree().create_timer(0.85).timeout
 	catSpring.play("sleep")
 
+
+
+func hazard_entered(area):
+	print("Hazard has been entered!")
+	danger = true
+
+
+func hazard_exited(area):
+	print("Hazard has been exited!")
+	danger = false
+	
+func die():
+	move_input = Vector2.ZERO
+	#var tween = create_tween()
+	#tween.tween_property(self, "scale", Vector2.ZERO, 0.15)
+	#tween.tween_callback(self.queue_free)
+	#tween.play()
+	position = Global.death_position
+
+func checkpoint_entered(area):
+	Global.death_position = position
+	print("Position updated!")
