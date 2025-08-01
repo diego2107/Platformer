@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://cqtwd4lpemcb1"]
+
+[ext_resource type="Texture2D" uid="uid://0abueyxdamo3" path="res://aseprite/emerald.png" id="1_d5u37"]
+[ext_resource type="Script" path="res://scenes/entities/emerald_area.gd" id="2_2n3ig"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2hx0a"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2n3ig"]
+size = Vector2(16, 30)
+
+[node name="Emerald" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_2hx0a")
+texture = ExtResource("1_d5u37")
+
+[node name="emeraldArea" type="Area2D" parent="Sprite2D"]
+collision_layer = 32
+script = ExtResource("2_2n3ig")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/emeraldArea"]
+shape = SubResource("RectangleShape2D_2n3ig")
+
+[connection signal="body_entered" from="Sprite2D/emeraldArea" to="Sprite2D/emeraldArea" method="_on_player_entered"]

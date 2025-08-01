@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://cpm4h08xg0apm"]
+
+[ext_resource type="Texture2D" uid="uid://ced03cja1b2ln" path="res://aseprite/final_bush0.png" id="2_vavv5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qjlii"]
+size = Vector2(2, 1)
+
+[node name="Spring" type="Area2D"]
+scale = Vector2(-0.153, -0.153)
+collision_layer = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -9.53674e-07)
+scale = Vector2(-0.153, -0.153)
+shape = SubResource("RectangleShape2D_qjlii")
+
+[node name="FinalBush0" type="Sprite2D" parent="."]
+scale = Vector2(-0.153, -0.153)
+texture = ExtResource("2_vavv5")

@@ -1,0 +1,82 @@
+[gd_scene load_steps=8 format=3 uid="uid://cq33h58nmi4ge"]
+
+[ext_resource type="Texture2D" uid="uid://bxo2jwn7u85w7" path="res://scenes/entities/player/cat-Sheet.png" id="1_0tauj"]
+[ext_resource type="Script" uid="uid://3bvisjdmcw1x" path="res://scenes/tiles/area_2d.gd" id="2_34ui2"]
+
+[sub_resource type="Animation" id="Animation_oknto"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+
+[sub_resource type="Animation" id="Animation_ya6g1"]
+resource_name = "sleep"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.466667, 1.46667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_34ui2"]
+resource_name = "startled"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1, 0.266667, 0.433333),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [2, 3, 4]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ya6g1"]
+_data = {
+&"RESET": SubResource("Animation_oknto"),
+&"sleep": SubResource("Animation_ya6g1"),
+&"startled": SubResource("Animation_34ui2")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6gpav"]
+size = Vector2(29, 13)
+
+[node name="Cat Spring" type="Sprite2D"]
+texture = ExtResource("1_0tauj")
+hframes = 5
+frame = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_ya6g1")
+}
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 8
+script = ExtResource("2_34ui2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-0.5, 9.5)
+shape = SubResource("RectangleShape2D_6gpav")
+
+[connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]

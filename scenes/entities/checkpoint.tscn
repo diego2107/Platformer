@@ -1,12 +1,84 @@
-[gd_scene load_steps=3 format=3 uid="uid://dfyhqbupop1wc"]
+[gd_scene load_steps=8 format=3 uid="uid://dfyhqbupop1wc"]
 
-[ext_resource type="Script" path="res://Checkpoint.gd" id="1_mphwq"]
+[ext_resource type="Script" path="res://scenes/entities/checkpoint.gd" id="1_ieljx"]
+[ext_resource type="Texture2D" uid="uid://dth6a74b5lt8w" path="res://aseprite/checkpoint.png" id="1_vw6dw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lc2fj"]
-size = Vector2(42.5, 41)
+size = Vector2(18, 34.25)
+
+[sub_resource type="Animation" id="Animation_nd1vu"]
+resource_name = "Cycle"
+length = 2.5535
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.308333, 0.408333, 0.508333, 0.616667, 0.716667, 0.816667, 0.966667, 1.11667, 1.26667, 1.46667, 1.73333, 2.03333, 2.46667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4]
+}
+
+[sub_resource type="Animation" id="Animation_1ccap"]
+resource_name = "Jump"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0333333, 0.566667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [1, 2]
+}
+
+[sub_resource type="Animation" id="Animation_ieljx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dlml4"]
+_data = {
+&"Cycle": SubResource("Animation_nd1vu"),
+&"Jump": SubResource("Animation_1ccap"),
+&"RESET": SubResource("Animation_ieljx")
+}
 
 [node name="Checkpoint" type="Area2D"]
-script = ExtResource("1_mphwq")
+collision_layer = 16
+script = ExtResource("1_ieljx")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1.125)
 shape = SubResource("RectangleShape2D_lc2fj")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -10
+texture = ExtResource("1_vw6dw")
+hframes = 5
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
+libraries = {
+&"": SubResource("AnimationLibrary_dlml4")
+}
+
+[node name="Timer" type="Timer" parent="Sprite2D"]
+one_shot = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="Sprite2D/Timer" to="." method="onTimerTimeout"]

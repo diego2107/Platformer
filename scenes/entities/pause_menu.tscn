@@ -1,0 +1,94 @@
+[gd_scene load_steps=12 format=3 uid="uid://lwwpcgedtne1"]
+
+[ext_resource type="Script" uid="uid://c3tc308y0clpn" path="res://scenes/entities/scripts/pause_menu.gd" id="1_2s02s"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2s02s"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pc881"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_757gp"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5q0xu"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kkoyj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_f7mah"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2s02s"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pc881"]
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+shadow_size = 1
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_pc881"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_757gp"]
+texture = SubResource("CanvasTexture_pc881")
+texture_margin_left = 5.0
+texture_margin_top = 1.0
+texture_margin_right = 5.0
+texture_margin_bottom = 1.0
+modulate_color = Color(0.212305, 0.212305, 0.212305, 1)
+
+[node name="pauseMenu" type="CanvasLayer"]
+visible = false
+script = ExtResource("1_2s02s")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -159.652
+offset_top = -158.406
+offset_right = -159.652
+offset_bottom = -158.406
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+layout_mode = 0
+offset_right = 64.0
+offset_bottom = 66.0
+scale = Vector2(5, 5)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 20
+
+[node name="Resume" type="Button" parent="Control/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/outline_size = 5
+theme_override_styles/focus = SubResource("StyleBoxEmpty_2s02s")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_pc881")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_757gp")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_5q0xu")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_kkoyj")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_f7mah")
+theme_override_styles/hover = SubResource("StyleBoxFlat_2s02s")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_pc881")
+theme_override_styles/normal = SubResource("StyleBoxTexture_757gp")
+text = "Resume"
+
+[node name="Options" type="Button" parent="Control/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/outline_size = 5
+theme_override_styles/focus = SubResource("StyleBoxEmpty_2s02s")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_pc881")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_757gp")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_5q0xu")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_kkoyj")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_f7mah")
+theme_override_styles/hover = SubResource("StyleBoxFlat_2s02s")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_pc881")
+theme_override_styles/normal = SubResource("StyleBoxTexture_757gp")
+text = "Options"
+
+[connection signal="pressed" from="Control/VBoxContainer/Resume" to="." method="resumePressed"]
