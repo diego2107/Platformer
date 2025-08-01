@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://c5cpljuswtorp"]
+[gd_scene load_steps=18 format=3 uid="uid://c5cpljuswtorp"]
 
 [ext_resource type="Script" uid="uid://ku5tw0becqyj" path="res://scenes/environment/Camera2D.gd" id="1_431r6"]
 [ext_resource type="PackedScene" uid="uid://cq33h58nmi4ge" path="res://scenes/tiles/cat_spring.tscn" id="1_scdbs"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cqtwd4lpemcb1" path="res://scenes/entities/emeralds.tscn" id="5_wcnsb"]
 [ext_resource type="PackedScene" uid="uid://lwwpcgedtne1" path="res://scenes/entities/pause_menu.tscn" id="5_xrntt"]
 [ext_resource type="PackedScene" uid="uid://v2t8b3rbmuta" path="res://scenes/entities/sign.tscn" id="7_43fak"]
+[ext_resource type="PackedScene" uid="uid://be2qtbsktjxve" path="res://scenes/environment/secret_area.tscn" id="9_hfr0h"]
 
 [sub_resource type="Animation" id="Animation_scdbs"]
 length = 0.001
@@ -56,6 +57,9 @@ size = Vector2(16, 14)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j3fc8"]
 size = Vector2(16, 14)
 
+[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_7sfyy"]
+points = PackedVector2Array(40, 56, 40, -8, 32, -16, 24, -24, 0, -24, -8, -16, -8, -16, -16, -8, -16, 0, -16, 16, -24, 16, -24, 40, -40, 40, -40, 56)
+
 [node name="World" type="Node2D"]
 
 [node name="pauseMenu" parent="." instance=ExtResource("5_xrntt")]
@@ -66,16 +70,17 @@ size = Vector2(16, 14)
 position = Vector2(904, -256)
 
 [node name="RoomCamera" type="Camera2D" parent="."]
+position = Vector2(7.89, 0)
 zoom = Vector2(6, 6)
 process_callback = 0
 script = ExtResource("1_431r6")
 
 [node name="ColorRect" type="ColorRect" parent="RoomCamera"]
 z_index = 15
-offset_left = -168.0
-offset_top = -96.0
-offset_right = 168.0
-offset_bottom = 96.0
+offset_left = -151.89
+offset_top = -104.0
+offset_right = 184.11
+offset_bottom = 88.0
 color = Color(0, 0, 0, 0)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="RoomCamera"]
@@ -87,7 +92,7 @@ libraries = {
 position = Vector2(24, -48)
 
 [node name="PlatformingPlayer" parent="Chapter 1" instance=ExtResource("2_laoo8")]
-position = Vector2(64, -400)
+position = Vector2(928, -224)
 
 [node name="RoomDetector" type="Area2D" parent="Chapter 1/PlatformingPlayer"]
 collision_layer = 0
@@ -114,6 +119,7 @@ shape = SubResource("RectangleShape2D_j3fc8")
 [node name="Rooms" type="Node2D" parent="."]
 
 [node name="Room1" parent="Rooms" instance=ExtResource("4_5qsk4")]
+visible = false
 position = Vector2(184, -504)
 
 [node name="Room2" parent="Rooms" instance=ExtResource("4_5qsk4")]
@@ -146,6 +152,12 @@ position = Vector2(136, 64)
 [node name="Room8" parent="Rooms" instance=ExtResource("4_5qsk4")]
 position = Vector2(824, -320)
 
+[node name="secret_area" parent="Rooms/Room8" node_paths=PackedStringArray("target_tilemap_layer") instance=ExtResource("9_hfr0h")]
+target_tilemap_layer = NodePath("../../../Chapter 1/Hidden Tiles")
+
+[node name="collision" parent="Rooms/Room8/secret_area" index="0"]
+shape = SubResource("ConvexPolygonShape2D_7sfyy")
+
 [node name="Room9" parent="Rooms" instance=ExtResource("4_5qsk4")]
 position = Vector2(504, -320)
 
@@ -156,3 +168,6 @@ position = Vector2(312, -443)
 [connection signal="body_entered" from="Chapter 1/PlatformingPlayer/HazardDetector" to="Chapter 1/PlatformingPlayer" method="hazard_entered"]
 [connection signal="body_exited" from="Chapter 1/PlatformingPlayer/HazardDetector" to="Chapter 1/PlatformingPlayer" method="hazard_exited"]
 [connection signal="area_entered" from="Chapter 1/PlatformingPlayer/CheckpointDetector" to="Chapter 1/PlatformingPlayer" method="checkpoint_entered"]
+
+[editable path="Chapter 1"]
+[editable path="Rooms/Room8/secret_area"]

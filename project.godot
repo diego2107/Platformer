@@ -23,6 +23,8 @@ Global="*res://scenes/entities/player/global.gd"
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
+window/size/window_width_override=1920
+window/size/window_height_override=1080
 window/stretch/mode="viewport"
 
 [gui]
@@ -89,6 +91,7 @@ Escape={
 2d_physics/layer_6="Emeralds"
 2d_physics/layer_7="Sign"
 2d_physics/layer_8="Room"
+2d_physics/layer_9="Secret"
 
 [rendering]
 
